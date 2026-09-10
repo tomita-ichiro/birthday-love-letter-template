@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" role="img" aria-labelledby="title description">
+  <title id="title">Add photo 2</title>
+  <desc id="description">A neutral cream and sage floral placeholder for the second photograph.</desc>
+  <defs>
+    <linearGradient id="background" x1="1" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fffaf2"/>
+      <stop offset="1" stop-color="#e9eee5"/>
+    </linearGradient>
+    <pattern id="lines" width="34" height="34" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <path d="M0 0v34" stroke="#7f9278" stroke-width="1" opacity=".08"/>
+    </pattern>
+  </defs>
+  <rect width="800" height="800" fill="url(#background)"/>
+  <rect width="800" height="800" fill="url(#lines)"/>
+  <g fill="none" stroke="#7f9278" stroke-width="5" opacity=".5">
+    <path d="M63 665c89-46 129-112 155-208M99 610c-26-28-29-64-17-100M148 554c42 8 77-4 103-36"/>
+    <path d="M735 137c-88 48-126 116-150 212M701 193c27 27 31 62 21 98M653 250c-42-7-76 6-101 39"/>
+  </g>
+  <g fill="#d8b47b" opacity=".55">
+    <circle cx="83" cy="515" r="15"/><circle cx="109" cy="504" r="15"/><circle cx="112" cy="532" r="15"/><circle cx="87" cy="543" r="15"/>
+    <circle cx="716" cy="284" r="16"/><circle cx="689" cy="295" r="16"/><circle cx="687" cy="266" r="16"/><circle cx="713" cy="255" r="16"/>
+  </g>
+  <g text-anchor="middle" fill="#54393d">
+    <text x="400" y="376" font-family="Georgia, serif" font-size="34" font-style="italic">A place for a favorite day</text>
+    <text x="400" y="432" font-family="Arial, sans-serif" font-size="18" letter-spacing="5" fill="#61705c">ADD PHOTO 2</text>
+  </g>
+  <path d="M345 492h110" stroke="#7f9278" stroke-width="3" stroke-linecap="round" opacity=".5"/>
+</svg>

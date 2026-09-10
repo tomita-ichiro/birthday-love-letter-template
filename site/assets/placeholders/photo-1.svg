@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" role="img" aria-labelledby="title description">
+  <title id="title">Add photo 1</title>
+  <desc id="description">A neutral blush floral placeholder for the first photograph.</desc>
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fff7f3"/>
+      <stop offset="1" stop-color="#f5dce2"/>
+    </linearGradient>
+    <pattern id="dots" width="28" height="28" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.5" fill="#bc6f83" opacity=".1"/>
+    </pattern>
+  </defs>
+  <rect width="800" height="800" fill="url(#background)"/>
+  <rect width="800" height="800" fill="url(#dots)"/>
+  <g fill="none" stroke="#bc6f83" stroke-width="5" opacity=".46">
+    <path d="M86 234c95-26 111-103 128-178M114 184c-35-12-53-40-57-72M147 148c42-5 70-28 82-68"/>
+    <path d="M714 579c-96 21-116 96-141 170M681 626c34 14 49 43 50 75M644 659c-43 1-72 22-87 61"/>
+  </g>
+  <g fill="#efb7c3" opacity=".62">
+    <circle cx="61" cy="104" r="20"/><circle cx="92" cy="88" r="20"/><circle cx="99" cy="120" r="20"/><circle cx="70" cy="132" r="20"/>
+    <circle cx="739" cy="696" r="22"/><circle cx="707" cy="713" r="22"/><circle cx="703" cy="677" r="22"/><circle cx="735" cy="663" r="22"/>
+  </g>
+  <g text-anchor="middle" fill="#54393d">
+    <text x="400" y="376" font-family="Georgia, serif" font-size="34" font-style="italic">Your memory belongs here</text>
+    <text x="400" y="432" font-family="Arial, sans-serif" font-size="18" letter-spacing="5" fill="#8d4d60">ADD PHOTO 1</text>
+  </g>
+  <path d="M345 492h110" stroke="#bc6f83" stroke-width="3" stroke-linecap="round" opacity=".5"/>
+</svg>

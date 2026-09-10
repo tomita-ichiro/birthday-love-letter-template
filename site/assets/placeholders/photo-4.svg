@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" role="img" aria-labelledby="title description">
+  <title id="title">Add photo 4</title>
+  <desc id="description">A neutral lavender and blush floral placeholder for the fourth photograph.</desc>
+  <defs>
+    <linearGradient id="background" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0" stop-color="#f2e8ed"/>
+      <stop offset="1" stop-color="#fff9f3"/>
+    </linearGradient>
+    <pattern id="petals" width="70" height="70" patternUnits="userSpaceOnUse">
+      <path d="M35 26c-14-16 1-29 10-12 7-18 24-7 12 9-9 13-18 15-22 3Z" fill="#bc6f83" opacity=".055"/>
+    </pattern>
+  </defs>
+  <rect width="800" height="800" fill="url(#background)"/>
+  <rect width="800" height="800" fill="url(#petals)"/>
+  <g fill="none" stroke="#92758b" stroke-width="5" opacity=".48">
+    <path d="M79 702c81-38 125-97 160-184M130 654c-24-30-23-65-8-98M184 605c40 12 76 3 105-26"/>
+    <path d="M722 99c-79 41-122 101-154 189M673 149c25 29 25 65 11 98M620 199c-41-10-76 0-104 29"/>
+  </g>
+  <g fill="#d59aad" opacity=".57">
+    <circle cx="118" cy="577" r="18"/><circle cx="148" cy="565" r="18"/><circle cx="150" cy="598" r="18"/><circle cx="120" cy="610" r="18"/>
+    <circle cx="683" cy="222" r="19"/><circle cx="652" cy="235" r="19"/><circle cx="650" cy="201" r="19"/><circle cx="681" cy="189" r="19"/>
+  </g>
+  <g text-anchor="middle" fill="#54393d">
+    <text x="400" y="376" font-family="Georgia, serif" font-size="34" font-style="italic">One more memory to keep</text>
+    <text x="400" y="432" font-family="Arial, sans-serif" font-size="18" letter-spacing="5" fill="#72566d">ADD PHOTO 4</text>
+  </g>
+  <path d="M345 492h110" stroke="#92758b" stroke-width="3" stroke-linecap="round" opacity=".45"/>
+</svg>
