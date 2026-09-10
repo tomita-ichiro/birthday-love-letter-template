@@ -2,7 +2,7 @@
 
 A warm, floral one-page website for turning a birthday greeting, favorite photographs, and a personal letter into a small digital keepsake.
 
-[View the future live demo](https://tomita-ichiro.github.io/birthday-love-letter-template/)
+[View the live demo](https://tomita-ichiro.github.io/birthday-love-letter-template/)
 
 ![Desktop preview of the generic birthday letter template](docs/screenshot.png)
 
@@ -143,7 +143,7 @@ The verifier checks the exact publishable allowlist, local references, lowercase
 
 The workflow in `.github/workflows/deploy-pages.yml` runs on pushes to `main` and can also be started manually. It verifies the project, configures Pages, uploads only `site/`, and deploys the resulting artifact using narrowly scoped permissions.
 
-After creating a GitHub repository and pushing `main`, open **Settings → Pages** and choose **GitHub Actions** as the source if it is not selected automatically. The expected project URL is:
+After creating a GitHub repository and pushing `main`, open **Settings → Pages** and choose **GitHub Actions** as the source if it is not selected automatically. This template is live at:
 
 ```text
 https://tomita-ichiro.github.io/birthday-love-letter-template/
