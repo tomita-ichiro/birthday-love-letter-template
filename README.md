@@ -19,7 +19,7 @@ The reusable template and its original visual design were created by Ichiro Tomi
 - Responsive polaroid-style gallery with graceful image fallbacks
 - Scroll-reveal effects and an animated letter presentation
 - Typewriter letter effect and celebratory confetti
-- Optional, user-initiated background music control
+- Optional delayed background music with an accessible manual control
 - Keyboard-visible focus, semantic landmarks, and a skip link
 - Complete reduced-motion and JavaScript-disabled fallbacks
 - Dependency-free verification and GitHub Pages deployment
@@ -66,7 +66,7 @@ Only `site/` is published by the Pages workflow.
 1. Open `site/js/content.js`.
 2. Replace the demonstration occasion, recipient, headings, letter, signature, and footer values.
 3. Add your own optimized images under `site/assets/photos/` and update each photo's `src`, `alt`, `caption`, and `date`.
-4. Optionally add audio you have permission to publish under `site/assets/audio/` and configure `music.file`.
+4. Optionally add audio you have permission to publish under `site/assets/audio/` and configure `music.enabled`, `music.file`, and `music.delayedPlayback`.
 5. Run `node scripts/verify.mjs`, then preview the site locally.
 
 Configuration strings are rendered with safe DOM text APIs. Markup placed inside a string is displayed as text rather than executed as HTML.
@@ -86,7 +86,8 @@ Configuration strings are rendered with safe DOM text APIs. Markup placed inside
 | `letterParagraphs` | Any number of letter paragraphs, in reading order |
 | `signature`, `footerText` | Letter closing and footer copy |
 | `petals`, `confetti` | Enable switches, bounded counts, and color palettes |
-| `music.file`, `music.title` | Optional local audio path and displayed title |
+| `music.enabled`, `music.file`, `music.title` | Music enable switch, optional local audio path, and displayed title |
+| `music.delayedPlayback` | Whether playback is attempted after the first interaction and the delay in milliseconds |
 
 Long names, captions, and paragraph lists wrap naturally. Keep alternative text concise while describing what matters in the photograph; do not repeat the caption unless it conveys the same information.
 
@@ -111,13 +112,27 @@ Important: remove EXIF, GPS, camera, device, and thumbnail metadata from every i
 
 ## Optional licensed music
 
-Music is off and completely hidden by default. With an empty `music.file`, the page creates no audio request. To enable it:
+Music is off and completely hidden by default. With `music.enabled` set to `false` or an empty `music.file`, the page creates no audio request. To enable it:
 
 1. Create `site/assets/audio/`.
 2. Add an audio file you created or are licensed to redistribute. Supported extensions are OGG, WAV, WebM, M4A, and AAC.
-3. Set `music.file` and `music.title` in `site/js/content.js`.
+3. Set `music.enabled`, `music.file`, `music.title`, and the delayed-playback options in `site/js/content.js`.
 
-Playback begins only when the visitor presses the play button. The control reports its play/pause state to assistive technology and handles rejected playback without an uncaught error.
+```js
+music: {
+  enabled: true,
+  file: "assets/audio/your-licensed-audio.ogg",
+  title: "Your licensed song",
+  delayedPlayback: {
+    enabled: true,
+    delayMs: 3000
+  }
+}
+```
+
+When delayed playback is enabled, the timer starts after the visitor's first pointer, touch, click, or keyboard interaction—not at page load—and runs only once. After the configured delay, the page attempts playback. Set `delayedPlayback.enabled` to `false` to require the visitor to use the Play music button instead.
+
+Browsers may still block audible playback after a delay because autoplay rules vary by browser and user settings. The Promise returned by `audio.play()` is handled; if playback is rejected or the file cannot load, the visible Play music button remains available for a deliberate retry. The button exposes its play/pause state and status messages to assistive technology. Audio uses `preload="none"` and is not requested until playback is attempted.
 
 You must have permission to publish and redistribute any audio you add. Do not upload commercial recordings merely because you purchased or streamed them. Linking visitors to the artist's official streaming page is often the safer alternative.
 

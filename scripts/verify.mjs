@@ -137,6 +137,16 @@ try {
     if (configured.music && typeof configured.music.file === "string" && configured.music.file.trim()) {
       configuredPaths.push(configured.music.file.trim());
     }
+    if (!configured.music || typeof configured.music.enabled !== "boolean") {
+      fail("content.js music.enabled must be true or false.");
+    }
+    const delayedPlayback = configured.music && configured.music.delayedPlayback;
+    if (!delayedPlayback || typeof delayedPlayback.enabled !== "boolean") {
+      fail("content.js music.delayedPlayback.enabled must be true or false.");
+    }
+    if (!delayedPlayback || typeof delayedPlayback.delayMs !== "number" || !Number.isFinite(delayedPlayback.delayMs) || delayedPlayback.delayMs < 0) {
+      fail("content.js music.delayedPlayback.delayMs must be a non-negative number.");
+    }
     for (const configuredPath of configuredPaths) {
       resolveLocalReference(resolve(siteRoot, "index.html"), configuredPath);
     }

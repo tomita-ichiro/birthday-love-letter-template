@@ -64,9 +64,14 @@ window.SITE_CONTENT = {
     colors: ["#bc6f83", "#d99856", "#f0b6c3", "#7f9b76", "#f4d7a7"]
   },
 
-  // Leave file empty to hide the player. Only publish audio you are licensed to share.
+  // Music stays off until enabled and given a file. Only publish audio you are licensed to share.
   music: {
+    enabled: false,
     file: "",
-    title: "Your licensed song"
+    title: "Your licensed song",
+    delayedPlayback: {
+      enabled: true,
+      delayMs: 3000
+    }
   }
 };

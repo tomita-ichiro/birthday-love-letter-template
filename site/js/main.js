@@ -153,39 +153,119 @@
   const musicButton = document.querySelector("#music-button");
   const audio = document.querySelector("#background-music");
   const musicBars = document.querySelector("#music-bars");
-  const musicFile = content.music && typeof content.music.file === "string"
-    ? content.music.file.trim()
+  const musicStatus = document.querySelector("#music-status");
+  const musicSettings = content.music && typeof content.music === "object" ? content.music : {};
+  const musicFile = typeof musicSettings.file === "string"
+    ? musicSettings.file.trim()
     : "";
+  const musicEnabled = musicSettings.enabled === true && Boolean(musicFile);
+  const delayedSettings = musicSettings.delayedPlayback && typeof musicSettings.delayedPlayback === "object"
+    ? musicSettings.delayedPlayback
+    : {};
+  const delayedPlaybackEnabled = delayedSettings.enabled === true;
+  const configuredDelay = Number(delayedSettings.delayMs);
+  const playbackDelay = Number.isFinite(configuredDelay) && configuredDelay >= 0
+    ? Math.min(configuredDelay, 60000)
+    : 3000;
+  let firstInteractionHandled = false;
+  let delayedPlaybackTimer = 0;
+  let playbackPending = false;
+  let manuallyControlled = false;
 
   const updateMusicState = (playing) => {
     if (!musicButton) return;
     musicButton.setAttribute("aria-pressed", String(playing));
-    musicButton.setAttribute("aria-label", playing ? "Pause background music" : "Play background music");
+    musicButton.setAttribute("aria-label", playing ? "Pause music" : "Play music");
     const icon = musicButton.querySelector(".music-icon");
     if (icon) icon.textContent = playing ? "Ⅱ" : "♪";
     if (musicBars) musicBars.classList.toggle("is-playing", playing);
   };
 
-  if (musicFile && player && audio && musicButton) {
+  const setMusicStatus = (message) => {
+    if (musicStatus) musicStatus.textContent = message;
+  };
+
+  if (musicEnabled && player && audio && musicButton) {
+    audio.preload = "none";
     audio.src = musicFile;
     player.hidden = false;
-    setText("#music-title", content.music.title || "Background music");
+    setText("#music-title", musicSettings.title || "Background music");
+
+    const requestPlayback = async ({ automatic = false } = {}) => {
+      if (playbackPending || !audio.paused) return !audio.paused;
+      playbackPending = true;
+      try {
+        if (audio.error) audio.load();
+        const playResult = audio.play();
+        if (playResult && typeof playResult.then === "function") await playResult;
+        updateMusicState(true);
+        setMusicStatus("Background music is playing.");
+        return true;
+      } catch {
+        updateMusicState(false);
+        setMusicStatus(automatic
+          ? "Automatic playback was blocked or the audio could not load. Use the Play music button to try again."
+          : "Music could not start. Check the audio file or try the Play music button again.");
+        return false;
+      } finally {
+        playbackPending = false;
+      }
+    };
+
+    const clearDelayedPlayback = () => {
+      if (!delayedPlaybackTimer) return;
+      window.clearTimeout(delayedPlaybackTimer);
+      delayedPlaybackTimer = 0;
+    };
+
+    const removeInteractionListeners = () => {
+      document.removeEventListener("pointerup", handleFirstInteraction, true);
+      document.removeEventListener("click", handleFirstInteraction, true);
+      document.removeEventListener("keydown", handleFirstInteraction, true);
+    };
+
+    function handleFirstInteraction(event) {
+      if (firstInteractionHandled) return;
+      if (event.type === "keydown" && (event.repeat || event.isComposing || ["Alt", "Control", "Meta", "Shift"].includes(event.key))) {
+        return;
+      }
+      firstInteractionHandled = true;
+      removeInteractionListeners();
+      setMusicStatus(`Music is scheduled to start in ${playbackDelay} milliseconds.`);
+      delayedPlaybackTimer = window.setTimeout(() => {
+        delayedPlaybackTimer = 0;
+        if (!manuallyControlled && audio.paused) requestPlayback({ automatic: true });
+      }, playbackDelay);
+    }
+
+    if (delayedPlaybackEnabled) {
+      document.addEventListener("pointerup", handleFirstInteraction, true);
+      document.addEventListener("click", handleFirstInteraction, true);
+      document.addEventListener("keydown", handleFirstInteraction, true);
+    }
+
     musicButton.addEventListener("click", async () => {
+      manuallyControlled = true;
+      clearDelayedPlayback();
+      removeInteractionListeners();
       if (audio.paused) {
-        try {
-          await audio.play();
-          updateMusicState(true);
-        } catch {
-          updateMusicState(false);
-        }
+        await requestPlayback();
       } else {
         audio.pause();
         updateMusicState(false);
+        setMusicStatus("Background music is paused.");
       }
     });
+    audio.addEventListener("play", () => updateMusicState(true));
     audio.addEventListener("pause", () => updateMusicState(false));
-    audio.addEventListener("ended", () => updateMusicState(false));
-    audio.addEventListener("error", () => updateMusicState(false));
+    audio.addEventListener("ended", () => {
+      updateMusicState(false);
+      setMusicStatus("Background music has ended. Use the Play music button to play it again.");
+    });
+    audio.addEventListener("error", () => {
+      updateMusicState(false);
+      setMusicStatus("The audio file could not load. Use the Play music button to try again.");
+    });
   }
 
   const canvas = document.querySelector("#celebration-canvas");
